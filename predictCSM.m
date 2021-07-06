@@ -1,4 +1,6 @@
-function q = predictCSM( kAlphaPhi,xyw)
+
+function q = predictCSM( kAlpha,xyw)
+
 % q = predictCSM(kAlphaPhi, xyw)
 %
 % compute complex cross-spectral matrix from wavenumber and direction,
@@ -6,7 +8,7 @@ function q = predictCSM( kAlphaPhi,xyw)
 % for weightings.
 % 
 % Input
-%   kalphaPhi = [k, alpha, phi], wavenumber (2*pi/L) and direction
+%   kalpha = [k, alpha], wavenumber (2*pi/L) and direction
 %   (radians) and phi is a phase angle (with no later utility)
 %   xyw, delta_x, delta_y, weight
 %  
@@ -14,13 +16,23 @@ function q = predictCSM( kAlphaPhi,xyw)
 %   q, complex correlation q = exp(i*(kx*dx + ky*dy + phi))
 %   q is returned as a list of complex values but is returned as a single
 %   list of real, then imaginary coefficients.
+%
+%  NOTE - this is a new version that solves for phi directly from the phase
+%  difference between observed (v) and modeled (q) phase at the center
+%  point.  Thus phi has been dropped as an input variable.
 
-kx = -kAlphaPhi(1).*cos(kAlphaPhi(2));
-ky = -kAlphaPhi(1).*sin(kAlphaPhi(2));
-phi = kAlphaPhi(3);
+global callCount v centerInd
+
+kx = -kAlpha(1).*cos(kAlpha(2));
+ky = -kAlpha(1).*sin(kAlpha(2));
 kxky = [kx,ky];
-q=exp(sqrt(-1)*(xyw(:,1:2)*kxky' + repmat(phi,size(xyw,1),1))).*xyw(:,3);
+q=exp(sqrt(-1)*(xyw(:,1:2)*kxky'));
+phi = angle(v(centerInd))-angle(q(centerInd));
+q = q*exp(sqrt(-1)*phi);         % phase offset
+q = q.*xyw(:,3);
+
 q = [real(q); imag(q)];
+callCount = callCount+1;
 
 %
 %   Copyright (C) 2017  Coastal Imaging Research Network

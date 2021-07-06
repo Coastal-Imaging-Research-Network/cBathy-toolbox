@@ -22,7 +22,7 @@ function [x,y,map,wt] = findInterpMap(xyz,pa,map,kn,doNan)
 x = [pa(1):pa(2):pa(3)];
 y = [pa(4):pa(5):pa(6)];
 
-if nargin == 3
+if nargin  == 3
     kn = 1;
     doNan = 0;
 end

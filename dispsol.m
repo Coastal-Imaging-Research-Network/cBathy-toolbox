@@ -71,26 +71,20 @@ otherwise
 end
 
 %
-%   Copyright (C) 2017  Coastal Imaging Research Network
-%                       and Oregon State University
-
-%    This program is free software: you can redistribute it and/or  
-%    modify it under the terms of the GNU General Public License as 
-%    published by the Free Software Foundation, version 3 of the 
-%    License.
-
-%    This program is distributed in the hope that it will be useful,
-%    but WITHOUT ANY WARRANTY; without even the implied warranty of
-%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%    GNU General Public License for more details.
-
-%    You should have received a copy of the GNU General Public License
-%    along with this program.  If not, see
-%                                <http://www.gnu.org/licenses/>.
-
-% CIRN: https://coastal-imaging-research-network.github.io/
-% CIL:  http://cil-www.coas.oregonstate.edu
+% Copyright by Oregon State University, 2002, 2009
+% Developed through collaborative effort of the Argus Users Group
+% For official use by the Argus Users Group or other licensed activities.
 %
-%key cBathy
+% $Id: dispsol.m 177 2016-03-31 02:29:28Z stanley $
 %
-
+% $Log: dispsol.m,v $
+% Revision 1.2  2009/08/27 18:44:11  stanley
+% replaced old dispsol with NRL/KTHolland version based on dispsol2.
+%
+% Revision 1.1  2004/08/20 20:20:54  stanley
+% Initial revision
+%
+%
+%key TSA 
+%comment  Solves dispersion relation for k 
+%

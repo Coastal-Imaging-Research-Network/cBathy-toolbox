@@ -19,9 +19,9 @@ function bathy = fixBathyTide( bathy)
 
 %% Find estimated depths and tide correct, if tide data are available.
   
-if (exist(bathy.params.tideFunction) ~= 2)   % existing function
+if (exist(bathy.params.tideFunction,'file') ~= 2)   % existing function
 	return;
-end;
+end
 
 try
         foo = parseFilename(bathy.sName);
@@ -35,9 +35,9 @@ try
 	if(~isfield(bathy,'tide'))
 		bathy.tide = tide;
 		bathy.tide.zt = NaN;  % will correct with tide.zt later
-	end;
+    end
 
-	tidecorr = nansum( [bathy.tide.zt -1*tide.zt]);
+	tidecorr = sum( [bathy.tide.zt -1*tide.zt],'omitnan');
 	bathy.fDependent.hTemp = bathy.fDependent.hTemp + tidecorr;
 	bathy.fCombined.h = bathy.fCombined.h + tidecorr;
 	bathy.tide = tide;

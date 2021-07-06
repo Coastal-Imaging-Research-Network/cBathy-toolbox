@@ -78,6 +78,7 @@ end
 bathy.epoch = pn.time;
 bathy.sName = fn;
 bathy.params = params;
+params.DECIMATE = 1;
 
 [xyz, epoch, data, cam] = loadBathyStack( fn, params.DECIMATE );
 

@@ -18,7 +18,8 @@ for i = 1: length(fBList)
     empty = nan(small);
     [r,c,d] = ind2sub(fullSize,id);
     idSmall = sub2ind(small,r,c);
-    str = datestr(epoch2Matlab(str2num(bathy.epoch)), 21);
+    str=datestr(datenum('19700101','yyyymmdd')+str2double(bathy.epoch)/24/3600,21);
+    %str = datestr(epoch2Matlab(str2num(bathy.epoch)), 21);
     str = [str ', f = ' num2str(f,'%.3f') ' Hz'];
     % now plot figs
     figure(2); clf
@@ -26,7 +27,7 @@ for i = 1: length(fBList)
     k = empty;
     k(idSmall) = bathy.fDependent.k(id);
     imagesc(bathy.xm, bathy.ym, k); 
-    caxis([0 2*nanmedian(nanmedian(k))]); colorbar, title('k')
+    caxis([0 2*median(median(k,'omitnan'),'omitnan')]); colorbar, title('k')
     set(gca, 'ydir', 'norm')
 
     subplot(332)
@@ -47,7 +48,7 @@ for i = 1: length(fBList)
     kErr = empty;
     kErr(idSmall) = bathy.fDependent.kErr(id);
     imagesc(bathy.xm, bathy.ym,kErr); 
-    caxis([0 2*nanmedian(nanmedian(kErr))]); colorbar, title('kErr')
+    caxis([0 2*median(median(kErr,'omitnan'),'omitnan')]); colorbar, title('kErr')
     set(gca, 'ydir', 'norm')
 
     subplot(335)

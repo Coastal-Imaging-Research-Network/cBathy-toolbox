@@ -7,7 +7,7 @@ function version = cBathyVersion()
 
 % adds seam fix from OSU. Also new initialization function to improve
 % initial guesses.
-version = 1.2;
+version = 2.0;
 
 
 %

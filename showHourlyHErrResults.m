@@ -20,8 +20,8 @@ epoch = epoch(good);
 for i = 2: length(nms);
         load([resultsPath nms(i-1).name])
         hErr2 = bathy.fCombined.hErr.^2;
-        hErrVar(i) = nanmean(hErr2(:));
-    end
+        hErrVar(i) = mean(hErr2(:),'omitnan');
+    
 end
 
 figure(2); clf

@@ -21,7 +21,7 @@ if (size(map) ~= size(weight))
     warn('map and weight must have same size!');
 end
 
-
+in = in(:);
 % must loop, until Rob can find an elegant way
 out = in(map(:,1)) .* weight(:,1);
 for ii = 2:size(map,2);

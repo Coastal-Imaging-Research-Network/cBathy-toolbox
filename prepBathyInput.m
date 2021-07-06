@@ -4,7 +4,7 @@ function [f, G, bathy] = prepBathyInput( xyz, epoch, data, bathy )
 %
 %  [f, G, bathy] = prepBathyInput( xyz, epoch, data, bathy )
 %
-%  take stack data from mBw bathy stacks and create the fftd intermediate
+%  take stack data from mBW bathy stacks and create the fft-ed intermediate
 %   and a list of all x and y for analysis. Fill in empty bathy struct.
 %
 %  x and y are in bathy.xm, bathy.ym
@@ -27,7 +27,7 @@ end
 
 % fB are the center frequencies for potential analysis
 fB = params.fB; 
-dfB = fB(2)-fB(1);
+dfB = fB(2)-fB(1);      % assumes constant spacing
 
 % detrend the columns (time series), fft (G is complex).
 G = fft(detrend(double(data)));
@@ -45,7 +45,7 @@ f = f(id);
 G = G(id,:);
 G = G./abs(G);  % scale spectral results to 1.
 
-%% %%   2.  Define the analysis domain. 
+%%   2.  Define the analysis domain. 
 
 % size of x and y intervals
 dxm = params.dxm; 
@@ -65,7 +65,7 @@ if (cBDebug(params, 'DOPLOTPHASETILE'))    % allow user to change array
     [xm,ym] = alterAnalysisArray(xm,ym);
 end
 
-
+%% 3.  Create initial empty struct
 bathy.tide.zt = nan;
 bathy.tide.e = 0;
 bathy.tide.source = '';
@@ -75,11 +75,11 @@ bathy.ym = ym;
 % number of analysis points in x and y
 Nxm = length(xm); 
 Nym = length(ym); 
-
 nanArray = nan(Nym, Nxm);
 fNanArray = nan([Nym, Nxm, params.nKeep]);
 
-bathy.camUsed = nanArray;
+bathy.timex = nanArray;
+
 bathy.fDependent.fB = fNanArray;
 bathy.fDependent.k = fNanArray;
 bathy.fDependent.a = fNanArray;
@@ -90,9 +90,17 @@ bathy.fDependent.hTempErr = fNanArray;
 bathy.fDependent.skill = fNanArray;
 bathy.fDependent.dof = fNanArray;
 bathy.fDependent.lam1 = fNanArray;
+bathy.fDependent.NPixels = fNanArray;
+bathy.fDependent.NCalls = fNanArray;
+bathy.fDependent.kSeed = fNanArray;
+bathy.fDependent.aSeed = fNanArray;
+bathy.fDependent.camUsed = nanArray;
+
 bathy.fCombined.h = nanArray;
 bathy.fCombined.hErr = nanArray;
 bathy.fCombined.J = nanArray;
+bathy.fCombined.fBar = nanArray;
+
 bathy.runningAverage.h = nanArray;
 bathy.runningAverage.hErr = nanArray;
 bathy.runningAverage.P = nanArray;

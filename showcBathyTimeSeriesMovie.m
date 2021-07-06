@@ -53,7 +53,7 @@ I = nan(Ny,Nx);
 for ii = 1: length(epoch)
     I = reshape(data(ii,map),Ny,Nx);
     imagesc(x,y,log(I)); axis xy; axis equal; axis tight
-    pause(0.2)
+    pause(0.1)
 end
 
 %   Copyright (C) 2017  Coastal Imaging Research Network

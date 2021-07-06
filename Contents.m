@@ -1,9 +1,9 @@
-% cBathy - routines to estimate k-alpha and bathy from pixel data
-%             - mostly renamed from old beachWizard
+% cBathy-Toolbox-1.3 - Estimate k-alpha and bathy from pixel data
 %
 % Batch Routines
 %   cBathyBatch         - executes cBathy for a range of days
 %   analyzeSingleBathyRun - batch analysis for a single stackName
+%   analyzeSingleBathyRunFrommBW - batch from an mBW stack in cx
 %   SETTINGS            - contains the params setting for each site
 %
 % Stack Routines: 
@@ -12,12 +12,14 @@
 % Analysis Routines:
 %   analyzeBathyCollect - single run cBathy analysis (parallel)
 %   prepBathyInput      - prepare inputs for analysis
-%   subBathyProcess     - wrapper to extract and process an analysis point
 %   csmInvertKAlpha     - main cBathy inversion routine for k-alpha
 %   bathyFromKAlpha     - nonlinear solver for bathy from k-alpha
+%   fixBathyTide        - adjust depth estimates for tide.
+%   prepareTiles        - find fs, vs, seeds for each tide
 %   predictCSM          - xspectral matrix forward model for solver
-%   findKAlphaPhiInit   - seed for nonlinear solver 
+%   findKAlphaSeed      - seed for nonlinear solver 
 %   kInvertDepthModel   - used for bathy solver
+%   bathyCI 		- modified version of nlparci for cBathy
 %
 % Kalman Filtering:
 %   makeKalmanBathySeed - initialize the first run for K-filtering
@@ -25,23 +27,22 @@
 %   KalmanFilterBathy   - core Kalman filter routine
 %   findProcessError    - compute sensible process error
 %
-% Debugging and viewing
+% Debugging and viewing cBathy components
 %   plotStacksAndPhaseMaps  - debugMode displays for whole collect
 %   listfDependentResultsForOnePoint - debugMode listing of fDependents
 %   examineSingleBathyResult- display all variables for any bathy
-%   plotBathyCollectSDS     - images of a single bathy and errors
+%   plotBathyCollect        - images of a single bathy and errors
 %   plotBathyCollectKalman  - images of a Kalman-ed bathy and error
 %   showHourlyBathyResults  - loop through a bathy sequence
 %   showHourlyKalmanResults - loop through smooth sequence
 %   plotBathyKalmanStep     - steps through runs showing all debug info
-%   findInterpMap           - calculate the map for interpolating 
-%                             from irregular spaced stack data to
-%                             regular spaced image coords, using knnsearch
-%                             and returning N neighbors and weights
-%   useInterpMap            - use the interp map from findInterpMap
+%   alterAnalysisArray 	    - allow change to the xm-ym values for debugging
+%
+% Viewing the cBathy Stack Data
 %   showcBathyTimeSeriesMovie - display a sequence of cBathy "frames"
-%   showWaveVarianceMap      - show wave information visually
-%   
+%   findInterpMap             - find mapping from pixels to regular map 
+%   useInterpMap              - use the interp map from findInterpMap
+%   showWaveVarianceMap       - show wave information visually
 
 %
 %   Copyright (C) 2017  Coastal Imaging Research Network

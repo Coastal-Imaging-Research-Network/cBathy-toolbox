@@ -24,15 +24,15 @@ alpha = 0.05;
 n = sum(w)/max(w);  % Holman kludge
 v = n-1;
 
-if flag == 1 && ~isempty(ver('stats')) % use the stats toolbox if you have it
+if flag == 1 % use the stats toolbox if you have it
     
     % Calculate covariance matrix
     [~,R] = qr(J,0);
     Rinv = R\eye(size(R));
-    diag_info = sum(Rinv.*Rinv,2);
+    diagInfo = sum(Rinv.*Rinv,2);
     
     rmse = norm(resid) / sqrt(v);
-    se = sqrt(diag_info) * rmse;
+    se = sqrt(diagInfo) * rmse;
     
     % Calculate bathyError from t-stats.
     bathyErr = se * tinv(1-alpha/2,v);

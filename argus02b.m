@@ -8,21 +8,23 @@ params.tideFunction = 'cBathyTide';  % tide level function for evel
 
 %%%%%%%   Power user settings from here down   %%%%%%%
 params.MINDEPTH = 0.25;             % for initialization and final QC
-params.QTOL = 0.5;                  % reject skill below this in csm
+params.QTOL = 0.35;                 % reject skill below this in csm
 params.minLam = 10;                 % min normalized eigenvalue to proceed
 params.Lx = 3*params.dxm;           % tomographic domain smoothing
 params.Ly = 3*params.dym;           % 
 params.kappa0 = 2;                  % increase in smoothing at outer xm
 params.DECIMATE = 1;                % decimate pixels to reduce work load.
 params.maxNPix = 80;                % max num pixels per tile (decimate excess)
-params.minValsForBathyEst = 4; 
+params.minValsForBathyEst = 4;      % need this many pixels to solve
+params.shortLengthNFreqs = 4;       % need this many for coherence sorting
+                                    % versus magnitude shorting
 
 % f-domain etc.
 params.fB = [1/18: 1/50: 1/4];		% frequencies for analysis (~40 dof)
 params.nKeep = 4;                   % number of frequencies to keep
 
 % debugging options
-params.debug.production = 1;
+params.debug.production = 1; % this should be ZERO in DEBUG MODE!
 params.debug.DOPLOTSTACKANDPHASEMAPS = 1;  % top level debug of phase
 params.debug.DOSHOWPROGRESS = 1;		  % show progress of tiles
 params.debug.DOPLOTPHASETILE = 1;		  % observed and EOF results per pt
@@ -32,10 +34,11 @@ params.debug.TRANSECTY = 900;		  % for plotStacksAndPhaseMaps
 % default offshore wave angle.  For search seeds.
 params.offshoreRadCCWFromx = 0;
 
-% choose method for non-linear fit
-params.nlinfit = 0; % flag, 0 = use LMFnlsq.m to do non-linear fitting
-                    %       1 = use Matlab Statistics and computer vision
-                    %       toolbox nlinfit.m 
+params.nlinfit = 1; % flag, 0 = use LMFnlsq.m to do non-linear fitting
+
+
+
+
 %
 % Copyright by Oregon State University, 2011
 % Developed through collaborative effort of the Argus Users Group
@@ -55,3 +58,4 @@ params.nlinfit = 0; % flag, 0 = use LMFnlsq.m to do non-linear fitting
 %comment  
 %
 params.minValsForBathyEst = 4;
+

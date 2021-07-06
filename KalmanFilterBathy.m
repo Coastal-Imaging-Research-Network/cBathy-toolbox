@@ -15,7 +15,7 @@ hPrior = priorBathy.runningAverage.h;
 dt = (str2num(newBathy.epoch) - str2num(priorBathy.epoch)) / (24*3600);  % in days
 foo = parseFilename(priorBathy.sName);
 Q = findProcessError(foo.station, newBathy, H)*dt;
-P = nansum(cat(3, priorBathy.runningAverage.P, Q),3);
+P = sum(cat(3, priorBathy.runningAverage.P, Q),3,'omitnan');
 
 % update everywhere then fix the nan problems in prior or new
 K = P ./ (P + newBathy.fCombined.hErr.^2);

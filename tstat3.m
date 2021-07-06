@@ -38,12 +38,12 @@ function pt = tstat3( v, tp, stat )
 % t: t-statistic
 % v: degrees of freedom
 
-tdist2T = @(t,v) (1-betainc(v/(v+t^2), v/2, 0.5));                              % 2-tailed t-distribution
-tdist1T = @(t,v) 1-(1-tdist2T(t,v))/2;                                          % 1-tailed t-distribution
+tDist2T = @(t,v) (1-betainc(v/(v+t^2), v/2, 0.5));                              % 2-tailed t-distribution
+tDist1T = @(t,v) 1-(1-tDist2T(t,v))/2;                                          % 1-tailed t-distribution
 
 % This calculates the inverse t-distribution (parameters given the
 %   probability ‘alpha’ and degrees of freedom ‘v’: 
-t_inv = @(alpha,v) fzero(@(tval) (max(alpha,(1-alpha)) - tdist1T(tval,v)), 5);  % T-Statistic Given Probability ‘alpha’ & Degrees-Of-Freedom ‘v’
+tInv = @(alpha,v) fzero(@(tval) (max(alpha,(1-alpha)) - tDist1T(tval,v)), 5);  % T-Statistic Given Probability ‘alpha’ & Degrees-Of-Freedom ‘v’
 
 statcell = {'one' 'two' 'inv'};                                                 % Available Options
 nc = cellfun(@(x)~isempty(x), regexp(statcell, stat));                          % Logical Match Array
@@ -61,11 +61,11 @@ end
 
 switch n                                                                        % Calculate Requested Statistics
     case 1
-        pt = tdist1T(tp, v);
+        pt = tDist1T(tp, v);
     case 2
-        pt = tdist2T(tp, v);
+        pt = tDist2T(tp, v);
     case 3
-        pt = t_inv(tp, v);
+        pt = tInv(tp, v);
     otherwise
         pt = NaN;
 end
